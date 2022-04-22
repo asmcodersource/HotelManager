@@ -12,6 +12,10 @@ DateWidget::DateWidget(QWidget *parent) : QWidget{parent}{
     table_date_day->setModel(model_items_date_day.get());
     table_date_month->setModel(model_items_date_month.get());
 
+    // Відключення обведення фокусу для таблиць
+    table_date_day->setFocusPolicy(Qt::NoFocus);
+    table_date_month->setFocusPolicy(Qt::NoFocus);
+
     // Ініціалізація головного макету віджета
     layout_main->setSpacing(0);
     layout_main->addWidget(table_date_month.get());
@@ -32,6 +36,9 @@ void DateWidget::initializeDateModel(){
         auto* month_item_ptr = new QStandardItem();
         month_item_ptr->setText(months[date.month() - 1] + ", " + QString::number(date.year()));
         month_item_ptr->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+        month_item_ptr->setEditable(false);
+        month_item_ptr->setCheckable(false);
+        month_item_ptr->setSelectable(false);
         // Встановлення кольору представлення в залежності від парності числа
         if( date.month() % 2 ){
              month_item_ptr->setForeground(QColor(255,255,255));
@@ -57,6 +64,9 @@ void DateWidget::initializeDateModel(){
        auto* day_item_ptr = &(items_days[day_number]);
        day_item_ptr->setText(QString::number(date.day()));
        day_item_ptr->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+       day_item_ptr->setEditable(false);
+       day_item_ptr->setCheckable(false);
+       day_item_ptr->setSelectable(false);
        // Встановлення кольору представлення якщо день є суботою, чи неділею
        if( date.dayOfWeek() == 6 || date.dayOfWeek() == 7 ){
             day_item_ptr->setForeground(QColor(255,255,255));
