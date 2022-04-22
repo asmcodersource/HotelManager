@@ -32,6 +32,7 @@ class DateWidget : public QWidget
     QStringList months = {"Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
     int32_t cell_day_size = 25;
     int32_t year_begin, year_end;
+    int32_t left_offset;
 
 public:
     explicit DateWidget(QWidget *parent = nullptr);
@@ -41,6 +42,8 @@ public:
     void setYearRange(int32_t begin_year, int32_t end_year);
     // метод для встановлення ширини клінки з числом дня у місяці.
     void setDayCellWidth(int32_t new_width);
+    // метод для встановлення лівого відступу від батьківського віджету
+    void setLeftOffset(int32_t offset /* в пікселях */ );
 
 signals:
 

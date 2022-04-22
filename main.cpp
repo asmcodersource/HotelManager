@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "calendarwidget.h"
+#include "calendarscrollwidget.h"
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
@@ -13,11 +13,10 @@ int main(int argc, char *argv[])
     css_file.open(QFile::ReadOnly);
     auto stylesheet = QString(css_file.readAll());
     css_file.close();
-    qDebug() << stylesheet;
     a.setStyleSheet(stylesheet);
 
 
-    auto* calendar = new CalendarWidget;
+    auto* calendar = new CalendarScrollWidget;
     calendar->show();
     return a.exec();
 }

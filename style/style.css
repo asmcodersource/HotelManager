@@ -1,0 +1,7 @@
+RoomsTabWidget QLabel{
+    color: white;
+    background-color: #4C7FA1;
+    padding:7px;
+    font-size: 11pt;
+    font-weight: 700;
+}

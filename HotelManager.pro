@@ -9,15 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    calendarscrollwidget.cpp \
     calendarwidget.cpp \
     datewidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    roomstabwidget.cpp
 
 HEADERS += \
+    calendarscrollwidget.h \
     calendarwidget.h \
     datewidget.h \
-    mainwindow.h
+    mainwindow.h \
+    roomstabwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

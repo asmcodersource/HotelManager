@@ -32,6 +32,7 @@ void DateWidget::initializeDateModel(){
     // Заповнення таблиці місяців
     auto* model = model_items_date_month.get();
     QDate date = QDate(year_begin, 1, 1);
+    int32_t number_of_days = date.daysTo(QDate(year_end, 1, 1));
     for( int32_t month_number = 0; month_number < (12 * years_count);  month_number++ ){
         auto* month_item_ptr = new QStandardItem();
         month_item_ptr->setText(months[date.month() - 1] + ", " + QString::number(date.year()));
@@ -58,9 +59,9 @@ void DateWidget::initializeDateModel(){
     date = QDate(year_begin, 1, 1);
     table_date_day->horizontalHeader()->setMinimumSectionSize(0);
     table_date_day->hide();
-    model->setColumnCount((365 * years_count));
-    items_days = new QStandardItem[(365 * years_count)];
-    for( int32_t day_number = 0; day_number < (365 * years_count); day_number++ ){
+    model->setColumnCount(number_of_days);
+    items_days = new QStandardItem[number_of_days];
+    for( int32_t day_number = 0; day_number < number_of_days; day_number++ ){
        auto* day_item_ptr = &(items_days[day_number]);
        day_item_ptr->setText(QString::number(date.day()));
        day_item_ptr->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
@@ -69,11 +70,11 @@ void DateWidget::initializeDateModel(){
        day_item_ptr->setSelectable(false);
        // Встановлення кольору представлення якщо день є суботою, чи неділею
        if( date.dayOfWeek() == 6 || date.dayOfWeek() == 7 ){
-            day_item_ptr->setForeground(QColor(255,255,255));
-            day_item_ptr->setBackground(QColor(64, 154, 214));
+           day_item_ptr->setForeground(QColor(255,255,255));
+           day_item_ptr->setBackground(QColor(64, 154, 214));
        } else {
-            // В іншому випадку просто чорний текст
-            day_item_ptr->setForeground(QColor(0,0,0));
+           // В іншому випадку просто чорний текст
+           day_item_ptr->setForeground(QColor(0,0,0));
        }
        model->setItem(0,day_number, day_item_ptr);
        date = date.addDays(1);
@@ -108,21 +109,31 @@ void DateWidget::setYearRange(int32_t begin_year, int32_t end_year){
         view->setMaximumHeight(30);
     }
 
-    // Ініціалізація ширини таблиці
-    setMinimumWidth(cell_day_size * 365 * years_count );
+    setDayCellWidth(cell_day_size);
 }
 
 void DateWidget::setDayCellWidth(int32_t new_width){
     cell_day_size = new_width;
     int32_t years_count = year_end - year_begin;
     QDate date = QDate(year_begin, 1, 1);
+    int32_t number_of_days = date.daysTo(QDate(year_end, 1, 1));
     // встановлення ширини для клітинок місяця відносно кількості днів у них
     for( int32_t month_number = 0; month_number < (12 * years_count);  month_number++ ){
         table_date_month->setColumnWidth(month_number, cell_day_size*date.daysInMonth());
         date = date.addMonths(1);
     }
     // встановлення ширини для клітонок з числом кожного дня
-    for( int32_t day_number = 0; day_number < (365 * years_count); day_number++ ){
+    for( int32_t day_number = 0; day_number < number_of_days; day_number++ ){
          table_date_day->setColumnWidth(day_number, cell_day_size);
     }
+
+    // Ініціалізація ширини таблиці
+    setMinimumWidth((cell_day_size * number_of_days) + left_offset );
+}
+
+
+void DateWidget::setLeftOffset(int32_t offset ){
+    left_offset = offset;
+    layout_main->setContentsMargins(left_offset, 0,0,0);
+    setDayCellWidth(cell_day_size);
 }
