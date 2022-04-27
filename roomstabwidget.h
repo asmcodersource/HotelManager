@@ -12,10 +12,14 @@
 #include <QLayout>
 #include <QLabel>
 #include <QDebug>
+#include "calendarwidget.h"
 
 class RoomsTabWidget : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(quint16 day_cell_width READ dayCellWidth    WRITE setDayCellWidth  )
+    Q_PROPERTY(quint16 day_cell_height READ dayCellHeight  WRITE setDayCellHeight )
+
     std::unique_ptr<QVBoxLayout> main_layout;
     std::unique_ptr<QHBoxLayout> rooms_layout;
     std::unique_ptr<QLabel> rooms_type_name;
@@ -28,7 +32,7 @@ class RoomsTabWidget : public QWidget
     int32_t year_begin, year_end;
     int32_t room_table_width = 230;
     QStringList rooms_list;
-    int32_t cell_day_size = 25;
+    int32_t cell_day_width = 25, cell_day_height = 25;
 
     std::vector<QStandardItem*> day_items_arrays;
 
@@ -38,8 +42,19 @@ public:
 
     void addRoom(QString room_name);
     // метод для встановлення ширини клінки з числом дня у місяці.
-    void setDayCellWidth(int32_t new_width);
+    void setDayCellWidth(qint16 new_value);
+    // метод для встановлення лівого відступу від батьківського віджету
+    void setLeftOffset(int32_t offset /* в пікселях */ );
+
+    qint16 dayCellWidth();
+    qint16 dayCellHeight();
+    void setDayCellHeight(qint16 new_value);
+
+public slots:
+    void widgetScrolledSlot(int32_t horizontal_scroll, int32_t vertical_scroll);
+
 signals:
+
 
 private:
     void addDayCells();

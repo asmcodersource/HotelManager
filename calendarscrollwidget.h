@@ -29,8 +29,11 @@ public:
     explicit CalendarScrollWidget(QWidget *parent = nullptr);
     ~CalendarScrollWidget() = default;
 
-signals:
+protected slots:
+    void widgetScrolledSlot();
 
+signals:
+    void signal_widgetScrolled(int32_t horizontal_scroll, int32_t vertical_scroll);
 };
 
 #endif // CALENDARSCROLLWIDGET_H

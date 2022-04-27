@@ -10,10 +10,21 @@ CalendarScrollWidget::CalendarScrollWidget(QWidget *parent) : QWidget{parent}{
     scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     scroll_area->horizontalScrollBar()->setEnabled(true);
     scroll_area->setWidget(calendar_widget.get());
+    scroll_area->setAutoFillBackground(true);
     scroll_area->setWidgetResizable(true);
 
     // Ініціалізація головного макету віджета
     main_layout->addWidget(scroll_area.get());
     main_layout->setContentsMargins(0,0,0,0);
     setLayout(main_layout.get());
+
+    // Підключення сигналів\слотів
+    connect(scroll_area->verticalScrollBar(), &QScrollBar::valueChanged, this, &CalendarScrollWidget::widgetScrolledSlot);
+    connect(scroll_area->horizontalScrollBar(), &QScrollBar::valueChanged, this, &CalendarScrollWidget::widgetScrolledSlot);
+    connect(this, &CalendarScrollWidget::signal_widgetScrolled, calendar_widget.get(), &CalendarWidget::widgetScrolledSlot);
+}
+
+
+void CalendarScrollWidget::widgetScrolledSlot(){
+    emit signal_widgetScrolled(scroll_area->horizontalScrollBar()->value(), scroll_area->verticalScrollBar()->value());
 }

@@ -19,6 +19,10 @@
 class DateWidget : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(quint16 day_cell_width READ dayCellWidth    WRITE setDayCellWidth  )
+    Q_PROPERTY(quint16 day_cell_height READ dayCellHeight  WRITE setDayCellHeight )
+    Q_PROPERTY(quint16 day_month_height READ monthCellHeight WRITE setMonthCellHeight )
+
     std::unique_ptr<QStandardItemModel> model_items_date_day;
     std::unique_ptr<QStandardItemModel> model_items_date_month;
     std::unique_ptr<QStandardItemModel> model_items_date_year;
@@ -30,7 +34,7 @@ class DateWidget : public QWidget
     QStandardItem* items_days;
 
     QStringList months = {"Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
-    int32_t cell_day_size = 25;
+    int32_t cell_day_width = 25, cell_day_height = 30, month_cell_height = 30;
     int32_t year_begin, year_end;
     int32_t left_offset;
 
@@ -45,7 +49,18 @@ public:
     // метод для встановлення лівого відступу від батьківського віджету
     void setLeftOffset(int32_t offset /* в пікселях */ );
 
+    qint16 dayCellWidth();
+    void setDayCellWidth(qint16 new_value);
+    qint16 dayCellHeight();
+    void setDayCellHeight(qint16 new_value);
+    qint16 monthCellHeight();
+    void setMonthCellHeight(qint16 new_value);
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 signals:
+    void signal_widgetResize(int32_t width, int32_t height);
 
 private:
     void initializeDateModel();

@@ -17,6 +17,7 @@ DateWidget::DateWidget(QWidget *parent) : QWidget{parent}{
     table_date_month->setFocusPolicy(Qt::NoFocus);
 
     // Ініціалізація головного макету віджета
+    setMinimumHeight(month_cell_height + cell_day_height);
     layout_main->setSpacing(0);
     layout_main->addWidget(table_date_month.get());
     layout_main->addWidget(table_date_day.get());
@@ -43,14 +44,14 @@ void DateWidget::initializeDateModel(){
         // Встановлення кольору представлення в залежності від парності числа
         if( date.month() % 2 ){
              month_item_ptr->setForeground(QColor(255,255,255));
-             month_item_ptr->setBackground(QColor(58, 118, 186));
+             month_item_ptr->setBackground(QColor(90, 121, 109));
         } else {
             month_item_ptr->setForeground(QColor(255,255,255));
-            month_item_ptr->setBackground(QColor(67, 137, 217));
+            month_item_ptr->setBackground(QColor(109, 139, 131));
         }
         model->setItem(0,month_number, month_item_ptr);
         // Зміна ширини даної клітинки відносно кількості днів у місяці
-        table_date_month->setColumnWidth(month_number, cell_day_size*date.daysInMonth());
+        table_date_month->setColumnWidth(month_number, cell_day_width*date.daysInMonth());
         date = date.addMonths(1);
     }
 
@@ -58,6 +59,7 @@ void DateWidget::initializeDateModel(){
     model = model_items_date_day.get();
     date = QDate(year_begin, 1, 1);
     table_date_day->horizontalHeader()->setMinimumSectionSize(0);
+    table_date_day->verticalHeader()->setMinimumSectionSize(0);
     table_date_day->hide();
     model->setColumnCount(number_of_days);
     items_days = new QStandardItem[number_of_days];
@@ -75,11 +77,12 @@ void DateWidget::initializeDateModel(){
        } else {
            // В іншому випадку просто чорний текст
            day_item_ptr->setForeground(QColor(0,0,0));
+           day_item_ptr->setBackground(QColor(167, 200, 252));
        }
        model->setItem(0,day_number, day_item_ptr);
        date = date.addDays(1);
        // Встановлення ширини клітинки
-       table_date_day->setColumnWidth(day_number, cell_day_size);
+       table_date_day->setColumnWidth(day_number, cell_day_width);
     }
     table_date_day->show();
 }
@@ -106,34 +109,73 @@ void DateWidget::setYearRange(int32_t begin_year, int32_t end_year){
         view->horizontalHeader()->hide();
         view->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
         view->setFrameStyle(QFrame::NoFrame);
-        view->setMaximumHeight(30);
     }
+    table_date_day->setMinimumHeight(cell_day_height);
+    table_date_month->setMinimumHeight(month_cell_height);
 
-    setDayCellWidth(cell_day_size);
+    setDayCellWidth(cell_day_width);
 }
 
 void DateWidget::setDayCellWidth(int32_t new_width){
-    cell_day_size = new_width;
+    cell_day_width = new_width;
     int32_t years_count = year_end - year_begin;
     QDate date = QDate(year_begin, 1, 1);
     int32_t number_of_days = date.daysTo(QDate(year_end, 1, 1));
     // встановлення ширини для клітинок місяця відносно кількості днів у них
     for( int32_t month_number = 0; month_number < (12 * years_count);  month_number++ ){
-        table_date_month->setColumnWidth(month_number, cell_day_size*date.daysInMonth());
+        table_date_month->setColumnWidth(month_number, cell_day_width*date.daysInMonth());
         date = date.addMonths(1);
     }
     // встановлення ширини для клітонок з числом кожного дня
     for( int32_t day_number = 0; day_number < number_of_days; day_number++ ){
-         table_date_day->setColumnWidth(day_number, cell_day_size);
+         table_date_day->setColumnWidth(day_number, cell_day_width);
     }
-
+    table_date_month->setRowHeight(0, month_cell_height);
+    table_date_day->setRowHeight(0, cell_day_height);
     // Ініціалізація ширини таблиці
-    setMinimumWidth((cell_day_size * number_of_days) + left_offset );
+    setMinimumWidth((cell_day_width * number_of_days) + left_offset );
 }
 
 
 void DateWidget::setLeftOffset(int32_t offset ){
     left_offset = offset;
     layout_main->setContentsMargins(left_offset, 0,0,0);
-    setDayCellWidth(cell_day_size);
+    setDayCellWidth(cell_day_width);
+}
+
+void DateWidget::resizeEvent(QResizeEvent *event){
+    emit signal_widgetResize(width(), height());
+}
+
+
+qint16 DateWidget::dayCellWidth(){
+    return cell_day_width;
+}
+
+void DateWidget::setDayCellWidth(qint16 new_value){
+    cell_day_width = new_value;
+}
+
+qint16 DateWidget::dayCellHeight(){
+    return  cell_day_height;
+}
+
+void DateWidget::setDayCellHeight(qint16 new_value){
+    cell_day_height = new_value;
+    setMinimumHeight(month_cell_height + cell_day_height);
+    table_date_day->setMinimumHeight(cell_day_height);
+    table_date_month->setMinimumHeight(month_cell_height);
+    table_date_day->setRowHeight(0, cell_day_height);
+}
+
+qint16 DateWidget::monthCellHeight(){
+    return month_cell_height;
+}
+
+void DateWidget::setMonthCellHeight(qint16 new_value){
+    month_cell_height = new_value;
+    setMinimumHeight(month_cell_height + cell_day_height);
+    table_date_day->setMinimumHeight(cell_day_height);
+    table_date_month->setMinimumHeight(month_cell_height);
+    table_date_month->setRowHeight(0, month_cell_height);
 }

@@ -1,7 +1,32 @@
+CalendarWidget{
+    background-color: rgb(207, 207, 207);
+    qproperty-width_left_side: 130;
+}
+
+DateWidget{
+    qproperty-day_cell_width: 25;
+    qproperty-day_cell_height: 30;
+    qproperty-day_month_height: 30;
+}
+
+RoomsTabWidget{
+    qproperty-day_cell_width: 25;
+    qproperty-day_cell_height: 25;
+}
+
 RoomsTabWidget QLabel{
     color: white;
-    background-color: #4C7FA1;
+    background-color: rgb(86, 131, 111);
     padding:7px;
     font-size: 11pt;
     font-weight: 700;
 }
+
+RoomsTabWidget QTableView{
+    font-weight: 700;
+}
+
+RoomsTabWidget QTableView::item:selected{
+    background-color: #FF2400;
+}
+
