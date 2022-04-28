@@ -9,6 +9,7 @@
 #include <QStandardItemModel>
 #include <QHeaderView>
 #include <QWidget>
+#include <QSpacerItem>
 #include <QLayout>
 #include <QLabel>
 #include <QDebug>
@@ -21,8 +22,10 @@ class RoomsTabWidget : public QWidget
     Q_PROPERTY(quint16 day_cell_height READ dayCellHeight  WRITE setDayCellHeight )
 
     std::unique_ptr<QVBoxLayout> main_layout;
+    std::unique_ptr<QHBoxLayout> rooms_header_layout;
     std::unique_ptr<QHBoxLayout> rooms_layout;
     std::unique_ptr<QLabel> rooms_type_name;
+    std::unique_ptr<QSpacerItem> spacer_for_header_layout;
 
     std::unique_ptr<QTableView> rooms_table;
     std::unique_ptr<QStandardItemModel> rooms_model;

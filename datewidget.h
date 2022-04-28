@@ -56,6 +56,8 @@ public:
     qint16 monthCellHeight();
     void setMonthCellHeight(qint16 new_value);
 
+    QString getValueFromVisualCenter(int32_t visual_width, int32_t scrolled_width);
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

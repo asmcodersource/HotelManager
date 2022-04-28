@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     calendarscrollwidget.cpp \
     calendarwidget.cpp \
+    dateuserinformerwidget.cpp \
     datewidget.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     calendarscrollwidget.h \
     calendarwidget.h \
+    dateuserinformerwidget.h \
     datewidget.h \
     mainwindow.h \
     roomstabwidget.h

@@ -179,3 +179,8 @@ void DateWidget::setMonthCellHeight(qint16 new_value){
     table_date_month->setMinimumHeight(month_cell_height);
     table_date_month->setRowHeight(0, month_cell_height);
 }
+
+QString DateWidget::getValueFromVisualCenter(int32_t visual_width, int32_t scrolled_width){
+    int32_t center_position = (visual_width / 2) + scrolled_width;
+    return table_date_month->indexAt(QPoint(center_position, 0)).data().toString();
+}

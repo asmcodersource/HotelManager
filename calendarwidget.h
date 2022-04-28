@@ -4,9 +4,10 @@
 #include <memory>
 #include <QWidget>
 #include <QColor>
-#include "datewidget.h"
 #include <vector>
+#include "datewidget.h"
 #include "roomstabwidget.h"
+#include "dateuserinformerwidget.h"
 
 class RoomsTabWidget;
 
@@ -16,6 +17,7 @@ class CalendarWidget : public QWidget
     Q_PROPERTY(quint16 width_left_side READ leftSideWidth WRITE setLeftSideWidth NOTIFY signal_leftSideWidthChange )
     std::unique_ptr<QVBoxLayout> main_layout;
     std::unique_ptr<DateWidget> date_widget;
+    std::unique_ptr<DateUserInformerWidget> date_user_inform_widget;
     std::vector<RoomsTabWidget*> tabs_widgets;
     quint16 left_offset = 0;
     quint16 dateline_height = 0;

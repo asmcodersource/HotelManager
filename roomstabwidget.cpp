@@ -7,15 +7,20 @@ RoomsTabWidget::RoomsTabWidget(int32_t year_begin, int32_t year_end, QWidget *pa
     // Створення об'єктів даного вікна
     main_layout  = std::unique_ptr<QVBoxLayout>(new QVBoxLayout());
     rooms_layout = std::unique_ptr<QHBoxLayout>(new QHBoxLayout());
+    rooms_header_layout = std::unique_ptr<QHBoxLayout>(new QHBoxLayout());
     rooms_type_name = std::unique_ptr<QLabel>(new QLabel(this));
     rooms_table = std::unique_ptr<QTableView>(new QTableView);
     rooms_model = std::unique_ptr<QStandardItemModel>(new QStandardItemModel());
     rooms_organize_table = std::unique_ptr<QTableView>(new QTableView(this));
     rooms_organize_model = std::unique_ptr<QStandardItemModel>(new QStandardItemModel());
+    spacer_for_header_layout = std::unique_ptr<QSpacerItem>(new QSpacerItem(0,1));
 
     // Ініціалізація вікна вкладки, та її об'єктів
-    setAutoFillBackground(true);
     rooms_type_name->setText("Кімната класу Example");
+    setAutoFillBackground(true);
+    rooms_header_layout->addItem(spacer_for_header_layout.get());
+    rooms_header_layout->addWidget(rooms_type_name.get());
+    rooms_header_layout->setContentsMargins(0,0,0,0);
 
     // Ініціалізація таблиць
     rooms_table->setParent(this);
@@ -43,7 +48,7 @@ RoomsTabWidget::RoomsTabWidget(int32_t year_begin, int32_t year_end, QWidget *pa
     rooms_layout->setContentsMargins(0,0,0,0);
 
     // Ініціалізація головного макету віджета
-    main_layout->addWidget(rooms_type_name.get());
+    main_layout->addItem(rooms_header_layout.get());
     main_layout->addItem(rooms_layout.get());
     main_layout->setContentsMargins(0,0,0,0);
     main_layout->setSpacing(0);
@@ -117,6 +122,10 @@ void RoomsTabWidget::setLeftOffset(int32_t offset ){
 void RoomsTabWidget::widgetScrolledSlot(int32_t horizontal_scroll, int32_t vertical_scroll){
     rooms_table->raise();
     rooms_table->move(horizontal_scroll, rooms_type_name->height() + 0);
+    spacer_for_header_layout->changeSize(horizontal_scroll, 1);
+    rooms_header_layout->invalidate();
+    main_layout->invalidate();
+
 }
 
 qint16 RoomsTabWidget::dayCellWidth(){
