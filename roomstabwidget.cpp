@@ -8,11 +8,11 @@ RoomsTabWidget::RoomsTabWidget(int32_t year_begin, int32_t year_end, QWidget *pa
     main_layout  = std::unique_ptr<QVBoxLayout>(new QVBoxLayout());
     rooms_layout = std::unique_ptr<QHBoxLayout>(new QHBoxLayout());
     rooms_header_layout = std::unique_ptr<QHBoxLayout>(new QHBoxLayout());
-    rooms_type_name = std::unique_ptr<QLabel>(new QLabel(this));
+    rooms_type_name = std::unique_ptr<QLabel>(new QLabel());
     rooms_table = std::unique_ptr<QTableView>(new QTableView);
-    rooms_model = std::unique_ptr<QStandardItemModel>(new QStandardItemModel());
-    rooms_organize_table = std::unique_ptr<QTableView>(new QTableView(this));
-    rooms_organize_model = std::unique_ptr<QStandardItemModel>(new QStandardItemModel());
+    rooms_model = std::unique_ptr<QStandardItemModel>(new QStandardItemModel(this));
+    rooms_organize_table = std::unique_ptr<QTableView>(new QTableView());
+    rooms_organize_model = std::unique_ptr<QStandardItemModel>(new QStandardItemModel(this));
     spacer_for_header_layout = std::unique_ptr<QSpacerItem>(new QSpacerItem(0,1));
 
     // Ініціалізація вікна вкладки, та її об'єктів

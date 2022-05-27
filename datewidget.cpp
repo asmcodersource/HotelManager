@@ -2,10 +2,10 @@
 
 DateWidget::DateWidget(QWidget *parent) : QWidget{parent}{
     // Дінамічне створення необхідних компонентів вікна, та об'єктів цього класу
-    layout_main = std::unique_ptr<QVBoxLayout>(new QVBoxLayout(this));
-    table_date_day = std::shared_ptr<QTableView>(new QTableView(this));
+    layout_main = std::unique_ptr<QVBoxLayout>(new QVBoxLayout());
+    table_date_day = std::shared_ptr<QTableView>(new QTableView());
     model_items_date_day = std::unique_ptr<QStandardItemModel>(new QStandardItemModel(this));
-    table_date_month = std::shared_ptr<QTableView>(new QTableView(this));
+    table_date_month = std::shared_ptr<QTableView>(new QTableView());
     model_items_date_month = std::unique_ptr<QStandardItemModel>(new QStandardItemModel(this));
 
     // ініціалізація представлення таблиць дати

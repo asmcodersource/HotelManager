@@ -3,12 +3,12 @@
 CalendarWidget::CalendarWidget(QWidget *parent) : QWidget{parent}{
     // Створення об'єктів даного вікна
     date_widget = std::unique_ptr<DateWidget>(new DateWidget(this));
-    main_layout = std::unique_ptr<QVBoxLayout>(new QVBoxLayout(this));
+    main_layout = std::unique_ptr<QVBoxLayout>(new QVBoxLayout());
     date_user_inform_widget = std::unique_ptr<DateUserInformerWidget>( new DateUserInformerWidget(this));
 
     // Ініціалізація віджета дат
     date_widget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    date_widget->setYearRange(2022, 2025);
+    date_widget->setYearRange(2022, 2023);
     date_widget->setLeftOffset(left_offset);
 
     // Ініціалізація головного макету віджета
@@ -17,19 +17,19 @@ CalendarWidget::CalendarWidget(QWidget *parent) : QWidget{parent}{
     date_user_inform_widget->setFixedHeight(date_widget->height());
     widgetScrolledSlot(0, 0);
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DELETE THIS
-    auto ptr1 = new RoomsTabWidget(2022,2024);
+    auto ptr1 = new RoomsTabWidget(2022, 2023);
     ptr1->setLeftOffset(left_offset);
     ptr1->exampleData();
     connect(this, &CalendarWidget::signal_widgetScrolled, ptr1, &RoomsTabWidget::widgetScrolledSlot);
     tabs_widgets.push_back(ptr1);
 
-    auto ptr0 = new RoomsTabWidget(2022,2024);
+    auto ptr0 = new RoomsTabWidget(2022, 2023);
     ptr0->setLeftOffset(left_offset);
     ptr0->exampleData();
     connect(this, &CalendarWidget::signal_widgetScrolled, ptr0, &RoomsTabWidget::widgetScrolledSlot);
     tabs_widgets.push_back(ptr0);
 
-    auto ptr2 = new RoomsTabWidget(2022,2024);
+    auto ptr2 = new RoomsTabWidget(2022, 2023);
     ptr2->setLeftOffset(left_offset);
     ptr2->exampleData();
     connect(this, &CalendarWidget::signal_widgetScrolled, ptr2, &RoomsTabWidget::widgetScrolledSlot);

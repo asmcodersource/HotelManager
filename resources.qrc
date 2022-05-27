@@ -2,4 +2,11 @@
     <qresource prefix="/">
         <file>style/style.css</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file>icons/calendar.png</file>
+        <file>icons/editor.png</file>
+        <file>icons/home.png</file>
+        <file>icons/list.png</file>
+        <file>icons/settings.png</file>
+    </qresource>
 </RCC>

@@ -1,5 +1,4 @@
-#include "mainwindow.h"
-#include "calendarscrollwidget.h"
+#include "CentralWidget.h"
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
@@ -7,6 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
 
     // Загрузка та встановлення файлю стилів
     QFile css_file(":/style/style.css");
@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
     a.setStyleSheet(stylesheet);
 
 
-    auto* calendar = new CalendarScrollWidget;
-    calendar->show();
+
+    auto* ptr = new CentralWidget;
+    ptr->show();
     return a.exec();
 }

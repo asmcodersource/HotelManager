@@ -12,6 +12,7 @@ CalendarScrollWidget::CalendarScrollWidget(QWidget *parent) : QWidget{parent}{
     scroll_area->setWidget(calendar_widget.get());
     scroll_area->setAutoFillBackground(true);
     scroll_area->setWidgetResizable(true);
+    scroll_area->horizontalScrollBar()->setSingleStep(10);
 
     // Ініціалізація головного макету віджета
     main_layout->addWidget(scroll_area.get());
