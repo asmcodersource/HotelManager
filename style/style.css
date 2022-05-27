@@ -45,6 +45,7 @@ SideBarButtonWidget QLabel{
 }
 
 
+/* NEXT SECTION --------------------------------------------------- */
 
 
 
@@ -54,14 +55,14 @@ CalendarWidget{
 }
 
 DateWidget{
-    qproperty-day_cell_width: 35;
-    qproperty-day_cell_height: 35;
+    qproperty-day_cell_width: 40;
+    qproperty-day_cell_height: 40;
     qproperty-day_month_height: 40;
 }
 
 RoomsTabWidget{
-    qproperty-day_cell_width: 35;
-    qproperty-day_cell_height: 35;
+    qproperty-day_cell_width: 40;
+    qproperty-day_cell_height: 40;
 }
 
 DateUserInformerWidget QLabel{

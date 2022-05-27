@@ -13,6 +13,7 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include "calendarwidget.h"
+#include "scrollbar.h"
 
 
 /*
@@ -24,6 +25,8 @@ class CalendarScrollWidget : public QWidget
     std::unique_ptr<QVBoxLayout> main_layout;
     std::unique_ptr<QScrollArea> scroll_area;
     std::unique_ptr<CalendarWidget> calendar_widget;
+    std::unique_ptr<ScrollBar> horizontal_scroll_bar;
+    std::unique_ptr<ScrollBar> vertical_scroll_bar;
 
 public:
     explicit CalendarScrollWidget(QWidget *parent = nullptr);

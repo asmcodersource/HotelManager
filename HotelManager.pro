@@ -16,6 +16,7 @@ SOURCES += \
     datewidget.cpp \
     main.cpp \
     roomstabwidget.cpp \
+    scrollbar.cpp \
     sidebar.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     dateuserinformerwidget.h \
     datewidget.h \
     roomstabwidget.h \
+    scrollbar.h \
     sidebar.h
 
 # Default rules for deployment.
