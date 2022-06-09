@@ -1,6 +1,6 @@
 #include "scrollbar.h"
 
-ScrollBar::ScrollBar(QScrollBar* parent) : QScrollBar(parent){
+ScrollBar::ScrollBar(QWidget* parent) : QScrollBar(parent){
     setAutoFillBackground(false);
     slider = nullptr;
     setStyleSheet("width:0px");
@@ -34,25 +34,22 @@ void ScrollBar::resizeEvent(QResizeEvent *event){
 }
 
 void ScrollBar::hideEvent(QHideEvent *event){
-    qDebug() << "hide";
     slider->hide();
 }
 
 void ScrollBar::showEvent( QShowEvent * event ){
     slider->show();
-    qDebug() << "show";
 }
 
 bool ScrollBar::eventFilter(QObject* object, QEvent* event){
     static int i = 0;
-    if( object->parent() == scrollarea && event->type() == QEvent::MouseMove ){
-        if( this->orientation == Qt::Orientation::Vertical ){
-            if( scrollarea->mapFromGlobal(QCursor::pos()).y() > scrollarea->height() - 10 )
+
+
+    if( event->type() == QEvent::MouseMove ){
+            if( scrollarea->mapFromGlobal(QCursor::pos()).y() > scrollarea->height() - 15 )
                 slider->hover();
-        } else {
-            if( scrollarea->mapFromGlobal(QCursor::pos()).x() > scrollarea->width() - 10)
+            if( scrollarea->mapFromGlobal(QCursor::pos()).x() > scrollarea->width() - 15)
                 slider->hover();
-        }
     }
 
     return false;
@@ -62,8 +59,9 @@ bool ScrollBar::eventFilter(QObject* object, QEvent* event){
 ////////////////////////////////////////////////////////////////////////////////////////
 
 Slider::Slider(QWidget* parent ): QAbstractSlider(parent){
+    Slider::orientation = Qt::Orientation::Vertical;
     setMouseTracking(true);
-    slider_color = QColor(90, 150, 230, 0);
+    slider_color = QColor(69, 110, 161, 0);
     connect(this, &Slider::valueChanged, [this](){
         hover();
     });
@@ -154,8 +152,8 @@ void Slider::hover(){
         QTimer::singleShot(5000, this, &Slider::hoverTimerFinish);
         QPropertyAnimation *animation = new QPropertyAnimation(this, "color");
         animation->setDuration(500);
-        animation->setStartValue(QColor(25, 31, 41, 0));
-        animation->setEndValue(QColor(25, 31, 41, 255));
+        animation->setStartValue(QColor(28, 111, 214, 0));
+        animation->setEndValue(QColor(28, 111, 214, 255));
         animation->start();
     }
 }
@@ -168,8 +166,8 @@ void Slider::hoverTimerFinish(){
     } else {
         QPropertyAnimation *animation = new QPropertyAnimation(this, "color");
         animation->setDuration(500);
-        animation->setStartValue(QColor(25, 31, 41, 255));
-        animation->setEndValue(QColor(25, 31, 41, 0));
+        animation->setStartValue(QColor(28, 111, 214, 255));
+        animation->setEndValue(QColor(28, 111, 214, 0));
         animation->start();
         showed = false;
     }

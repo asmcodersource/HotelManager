@@ -1,12 +1,16 @@
-#include "CentralWidget.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
+#include "startupwidget.h"
+#include "CentralWidget.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    StartupWidget w;
+    w.show();
 
     // Загрузка та встановлення файлю стилів
     QFile css_file(":/style/style.css");
@@ -17,7 +21,5 @@ int main(int argc, char *argv[])
 
 
 
-    auto* ptr = new CentralWidget;
-    ptr->show();
     return a.exec();
 }

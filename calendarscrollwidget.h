@@ -32,6 +32,8 @@ public:
     explicit CalendarScrollWidget(QWidget *parent = nullptr);
     ~CalendarScrollWidget() = default;
 
+    CalendarWidget* calendarWidget();
+
 protected slots:
     void widgetScrolledSlot();
 

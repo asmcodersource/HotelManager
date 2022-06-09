@@ -8,5 +8,6 @@
         <file>icons/home.png</file>
         <file>icons/list.png</file>
         <file>icons/settings.png</file>
+        <file>icons/room_clases.png</file>
     </qresource>
 </RCC>

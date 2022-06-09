@@ -24,7 +24,6 @@ RoomsTabWidget::RoomsTabWidget(int32_t year_begin, int32_t year_end, QWidget *pa
 
     // Ініціалізація таблиць
     rooms_table->setParent(this);
-    rooms_table->move(0, rooms_type_name->height() + 2);
     rooms_table->setModel(rooms_model.get());
     rooms_table->setFixedWidth(room_table_width);
     rooms_table->horizontalHeader()->hide();
@@ -40,6 +39,8 @@ RoomsTabWidget::RoomsTabWidget(int32_t year_begin, int32_t year_end, QWidget *pa
     rooms_organize_table->setFocusPolicy(Qt::NoFocus);
     rooms_organize_table->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     rooms_organize_table->setFrameStyle(0);
+    rooms_organize_table->setFixedHeight(0);
+    rooms_table->setFixedHeight(rooms_organize_table->height());
 
     // Ініціалізація макету таблиці кімнат
     // rooms_layout->addWidget(rooms_table.get());
@@ -54,6 +55,16 @@ RoomsTabWidget::RoomsTabWidget(int32_t year_begin, int32_t year_end, QWidget *pa
     main_layout->setSpacing(0);
     setLayout(main_layout.get());
 
+    connect(rooms_organize_table->selectionModel(), &QItemSelectionModel::selectionChanged, this, [&, this](){
+       QModelIndexList selection_columns = rooms_organize_table->selectionModel()->selectedIndexes();
+       if( selection_columns.size() != 0 ){
+           int32_t first_col = selection_columns.first().column();
+           int32_t last_col = selection_columns.last().column() + 1;
+           int32_t row = selection_columns.first().row();
+           emit newSelectionRange(row, first_col, last_col);
+       }
+       emit newSelection(this);
+    });
 }
 
 
@@ -74,10 +85,9 @@ void RoomsTabWidget::addRoom(QString room_name){
     rooms_model->setItem(rooms_list.size(), 0, item);
     addDayCells();
     rooms_table->setRowHeight(rooms_list.size(), cell_day_height);
-    rooms_table->setMaximumHeight((rooms_list.size() + 1) * cell_day_height );
-    rooms_organize_table->setMinimumHeight((rooms_list.size() + 1) * cell_day_height);
+    rooms_organize_table->setFixedHeight((rooms_list.size() + 1) * cell_day_height);
     rooms_list.append(room_name);
-    rooms_table->setMinimumHeight(rooms_organize_table->height());
+    rooms_table->setFixedHeight(rooms_organize_table->height());
 }
 
 void RoomsTabWidget::addDayCells(){
@@ -128,6 +138,10 @@ void RoomsTabWidget::widgetScrolledSlot(int32_t horizontal_scroll, int32_t verti
 
 }
 
+void RoomsTabWidget::setHeaderText(QString text){
+    rooms_type_name->setText(text);
+}
+
 qint16 RoomsTabWidget::dayCellWidth(){
     return cell_day_width;
 }
@@ -154,6 +168,25 @@ void RoomsTabWidget::setDayCellHeight(qint16 new_value){
          rooms_organize_table->setRowHeight(room_number, cell_day_height);
          rooms_table->setRowHeight(room_number, cell_day_height);
     }
-    rooms_organize_table->setMinimumHeight((rooms_list.size()) * cell_day_height);
-    rooms_table->setMinimumHeight(rooms_organize_table->height());
+    rooms_organize_table->setFixedHeight((rooms_list.size()) * cell_day_height);
+    rooms_table->setFixedHeight(rooms_organize_table->height());
+}
+
+QItemSelectionModel* RoomsTabWidget::selectionModel(){
+    return rooms_organize_table->selectionModel();
+}
+
+void RoomsTabWidget::resetSelection(){
+    rooms_organize_table->clearSelection();
+}
+
+GuestWidget* RoomsTabWidget::addGuestWidget(int32_t row, int32_t first_day, int32_t last_day, QString name, QColor background_color  ){
+    GuestWidget* guest_widget = new GuestWidget(rooms_organize_table.get());
+    int32_t width = (last_day - first_day + 1) * cell_day_width;
+    int32_t height = cell_day_height;
+    guest_widget->resize(width - 1, height - 1);
+    guest_widget->setNameText(name);
+    guest_widget->move(first_day * cell_day_width, row * cell_day_height);
+    guest_widget->setBackgroundColor(background_color);
+    return guest_widget;
 }

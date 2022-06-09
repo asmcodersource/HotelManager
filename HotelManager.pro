@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,10 +14,16 @@ SOURCES += \
     calendarwidget.cpp \
     dateuserinformerwidget.cpp \
     datewidget.cpp \
+    guestwidget.cpp \
     main.cpp \
+    mainwindow.cpp \
     roomstabwidget.cpp \
     scrollbar.cpp \
-    sidebar.cpp
+    sidebar.cpp \
+    startupwidget.cpp \
+    tabledata.cpp \
+    tabledataeditors.cpp \
+    tableviewfilters.cpp
 
 HEADERS += \
     CentralWidget.h \
@@ -25,9 +31,15 @@ HEADERS += \
     calendarwidget.h \
     dateuserinformerwidget.h \
     datewidget.h \
+    guestwidget.h \
+    mainwindow.h \
     roomstabwidget.h \
     scrollbar.h \
-    sidebar.h
+    sidebar.h \
+    startupwidget.h \
+    tabledata.h \
+    tabledataeditors.h \
+    tableviewfilters.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

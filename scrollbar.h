@@ -63,7 +63,7 @@ class ScrollBar : public QScrollBar
     QWidget* scrollarea;
 
 public:
-    ScrollBar(QScrollBar* parent = nullptr);
+    ScrollBar(QWidget* parent = nullptr);
     void sliderChange(SliderChange change) override;
     void paintEvent(QPaintEvent* event) override;
     void resizeEvent(QResizeEvent *event) override;

@@ -10,9 +10,11 @@
 #include <QHeaderView>
 #include <QWidget>
 #include <QSpacerItem>
+#include "guestwidget.h"
 #include <QLayout>
 #include <QLabel>
 #include <QDebug>
+#include <QItemSelectionModel>
 #include "calendarwidget.h"
 
 class RoomsTabWidget : public QWidget
@@ -48,16 +50,24 @@ public:
     void setDayCellWidth(qint16 new_value);
     // метод для встановлення лівого відступу від батьківського віджету
     void setLeftOffset(int32_t offset /* в пікселях */ );
+    // метод для встановлення заголовку групи
+    void setHeaderText(QString text);
+    // мотод для додавання віджету клієнта
+    GuestWidget* addGuestWidget(int32_t row, int32_t first_day, int32_t last_day, QString name, QColor background_color );
+
 
     qint16 dayCellWidth();
     qint16 dayCellHeight();
     void setDayCellHeight(qint16 new_value);
+    void resetSelection();
+    QItemSelectionModel* selectionModel();
 
 public slots:
     void widgetScrolledSlot(int32_t horizontal_scroll, int32_t vertical_scroll);
 
 signals:
-
+    void newSelection(RoomsTabWidget*);
+    void newSelectionRange(int32_t room_row, int32_t first_day, int32_t last_day);
 
 private:
     void addDayCells();

@@ -5,8 +5,8 @@ CalendarScrollWidget::CalendarScrollWidget(QWidget *parent) : QWidget{parent}{
     calendar_widget = std::unique_ptr<CalendarWidget>(new CalendarWidget(this));
     main_layout = std::unique_ptr<QVBoxLayout>(new QVBoxLayout(this));
     scroll_area = std::unique_ptr<QScrollArea>(new QScrollArea(this));
-    horizontal_scroll_bar = std::unique_ptr<ScrollBar>(new ScrollBar);
-    vertical_scroll_bar   = std::unique_ptr<ScrollBar>(new ScrollBar);
+    horizontal_scroll_bar = std::unique_ptr<ScrollBar>(new ScrollBar(this));
+    vertical_scroll_bar   = std::unique_ptr<ScrollBar>(new ScrollBar(this));
 
     // Ініціалізація вікна прокрутки
     scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -23,14 +23,22 @@ CalendarScrollWidget::CalendarScrollWidget(QWidget *parent) : QWidget{parent}{
 
     scroll_area->setVerticalScrollBar(vertical_scroll_bar.get());
     scroll_area->setHorizontalScrollBar(horizontal_scroll_bar.get());
+    setMouseTracking(true);
+
 
     // Підключення сигналів\слотів
     connect(scroll_area->verticalScrollBar(), &QScrollBar::valueChanged, this, &CalendarScrollWidget::widgetScrolledSlot);
     connect(scroll_area->horizontalScrollBar(), &QScrollBar::valueChanged, this, &CalendarScrollWidget::widgetScrolledSlot);
     connect(this, &CalendarScrollWidget::signal_widgetScrolled, calendar_widget.get(), &CalendarWidget::widgetScrolledSlot);
+    emit signal_widgetScrolled(scroll_area->horizontalScrollBar()->value(), scroll_area->verticalScrollBar()->value());
+    scroll_area->scroll(1,1);
 }
 
 
 void CalendarScrollWidget::widgetScrolledSlot(){
     emit signal_widgetScrolled(scroll_area->horizontalScrollBar()->value(), scroll_area->verticalScrollBar()->value());
+}
+
+CalendarWidget* CalendarScrollWidget::calendarWidget(){
+    return calendar_widget.get();
 }

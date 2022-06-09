@@ -10,7 +10,8 @@
 #include "sidebar.h"
 #include "calendarwidget.h"
 #include "calendarscrollwidget.h"
-
+#include "tabledata.h"
+#include "tabledataeditors.h"
 
 class CentralWidget : public QWidget
 {
@@ -19,6 +20,9 @@ class CentralWidget : public QWidget
     std::unique_ptr<SideBarWidget> side_bar_widget;
     std::unique_ptr<QStackedWidget> stacked_widget;
     std::unique_ptr<CalendarScrollWidget> calendar_widget;
+    std::unique_ptr<TableData> rooms_categories;
+    std::unique_ptr<TableDataRooms> rooms_list;
+    std::unique_ptr<TableDataGuests> guests_list;
     QVector<QWidget*> display_widgets;
 
 
@@ -33,5 +37,7 @@ public:
 
 public slots:
     void displayWidgetByIndex(int32_t index);
+    void blockCalendar();
+    void updateCalendar();
 };
 #endif // CENTRALWIDGET_H
