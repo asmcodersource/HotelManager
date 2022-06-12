@@ -1,6 +1,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QIcon>
 #include <QFile>
 #include "startupwidget.h"
 #include "CentralWidget.h"
@@ -8,9 +9,15 @@
 
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
+    QIcon program_icon(":/icons/icons/program_icon.png");
+    a.setWindowIcon(program_icon);
+
     StartupWidget w;
     w.show();
+    w.setWindowIcon(program_icon);
+
 
     // Загрузка та встановлення файлю стилів
     QFile css_file("style.css");

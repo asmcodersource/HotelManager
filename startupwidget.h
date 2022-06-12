@@ -20,7 +20,7 @@ class StartupWidget : public QWidget{
     std::unique_ptr<QSqlDatabase> data_base;
     std::unique_ptr<CentralWidget> central_widget;
     std::unique_ptr<MainWindow> main_window;
-    QLayout* main_layout;
+    QVBoxLayout* main_layout;
     QLayout* file_path_layout;
     QLayout* buttons_layout;
     QLineEdit* file_path;

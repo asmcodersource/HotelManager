@@ -1,13 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>style/style.css</file>
+        <file>myappico.ico</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/calendar.png</file>
         <file>icons/editor.png</file>
-        <file>icons/home.png</file>
         <file>icons/list.png</file>
         <file>icons/settings.png</file>
         <file>icons/room_clases.png</file>
+        <file>icons/program_icon.png</file>
     </qresource>
 </RCC>

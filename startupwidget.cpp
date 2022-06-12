@@ -25,6 +25,10 @@ StartupWidget::StartupWidget(QWidget *parent) : QWidget{parent}{
     buttons_layout->setContentsMargins(15,0,15,0);
     main_layout->addItem(file_path_layout);
     main_layout->addItem(buttons_layout);
+    auto* label = new QLabel("У програмі використані графічні зображення з сайту icons8.ru");
+    label->setAlignment(Qt::AlignCenter);
+    main_layout->addStretch(100);
+    main_layout->addWidget(label);
     setLayout(main_layout);
     setWindowTitle("Оберіть базу даних");
 
