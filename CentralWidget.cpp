@@ -72,7 +72,8 @@ CentralWidget::CentralWidget(QWidget *parent )  : QWidget(parent){
 
 
     stacked_widget->addWidget(calendar_widget.get());
-    stacked_widget->setCurrentWidget(rooms_categories.get());
+    stacked_widget->setCurrentWidget(calendar_widget.get());
+    sideBarWidget()->getButton(0)->setChecked(true);
 
     connect(sideBarWidget(), &SideBarWidget::signal_checkedChange, this, &CentralWidget::displayWidgetByIndex);
     connect(rooms_list.get(), &TableData::dataUpdated, this, &CentralWidget::blockCalendar);

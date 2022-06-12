@@ -19,7 +19,7 @@ SideBarButtonWidget::SideBarButtonWidget(bool radio, QWidget* parent  ): QPushBu
     connect(this, &QAbstractButton::clicked, this, [&, this](){
        if( SideBarButtonWidget::radio )
             emit signal_checkedChange(this);
-       emit signal_buttonPressed(button_index, this);
+
     });
 
 }

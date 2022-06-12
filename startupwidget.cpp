@@ -51,7 +51,7 @@ StartupWidget::StartupWidget(QWidget *parent) : QWidget{parent}{
        static QFileDialog* file_dialog = new QFileDialog();
        file_dialog->setWindowTitle("Вкажіть назву файлу що буде створюватись");
        file_dialog->setFileMode(QFileDialog::AnyFile);
-       file_dialog->setLabelText(QFileDialog::DialogLabel::Accept, "Відкрити");
+       file_dialog->setLabelText(QFileDialog::DialogLabel::Accept, "Створити");
        file_dialog->setLabelText(QFileDialog::DialogLabel::Reject, "Відміна");
        file_dialog->setLabelText(QFileDialog::DialogLabel::FileType, "Файли формату");
        file_dialog->setLabelText(QFileDialog::DialogLabel::FileName, "Ім'я файлу");
@@ -69,6 +69,7 @@ void StartupWidget::newPathSelected(QString new_path){
 }
 
 void StartupWidget::createNewFile(QString new_path){
+    new_path.append(".db");
     auto data_base = QSqlDatabase::addDatabase("QSQLITE");
     data_base.setDatabaseName(new_path);
     if (!data_base.open()) {
@@ -132,22 +133,22 @@ void StartupWidget::createNewFile(QString new_path){
             (
                 2,
                 'виселення',
-                '#237a32'
+                '#631921'
             ),
             (
                 3,
                 'проживання',
-                '#237a32'
+                '#66641a'
             ),
             (
                 4,
                 'резервування',
-                '#237a32'
+                '#2b3478'
             ),
             (
                 5,
                 'закрито',
-                '#237a32'
+                '#523063'
             );)");
     newPathSelected(new_path);
     data_base.close();

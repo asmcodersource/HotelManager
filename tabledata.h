@@ -89,11 +89,10 @@ class TableDataGuests : public TableData{
 
 public:
     TableDataGuests(CalendarWidget* calendar_ptr, QWidget *parent = nullptr);
-    void slot_createNewRow() override;
     void updateData() override;
 
 public slots:
-
+    void slot_createNewRow() override;
 };
 //-----------------------------------------------------------------------------------------------
 

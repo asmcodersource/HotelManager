@@ -50,7 +50,6 @@ public:
 
 signals:
     void signal_checkedChange(QAbstractButton* button);
-    void signal_buttonPressed( int32_t index, QAbstractButton* button);
 };
 
 

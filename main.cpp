@@ -13,12 +13,14 @@ int main(int argc, char *argv[])
     w.show();
 
     // Загрузка та встановлення файлю стилів
-    QFile css_file(":/style/style.css");
-    css_file.open(QFile::ReadOnly);
+    QFile css_file("style.css");
+    if ( !css_file.open(QFile::ReadOnly) ){
+        css_file.setFileName(":/style/style.css");
+        css_file.open(QFile::ReadOnly);
+    }
     auto stylesheet = QString(css_file.readAll());
     css_file.close();
     a.setStyleSheet(stylesheet);
-
 
 
     return a.exec();
